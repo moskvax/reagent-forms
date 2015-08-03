@@ -221,7 +221,7 @@
                                              (if-not (iterable? v)
                                                v (first v)))
                               :on-focus    #(when clear-on-focus? (save! id ""))
-                              :on-blur     #(do               ;when-not @mouse-on-list?
+                              :on-blur     #(when-not @mouse-on-list?
                                              (reset! typeahead-hidden? true)
                                              (reset! selected-index 0))
                               :on-change   #(do
@@ -259,8 +259,7 @@
                             [:li {:value         index
                                   :key           index
                                   :class         (if (= @selected-index index) highlight-class item-class)
-                                  :on-mouse-over #(do (reset! selected-index index
-                                                              #_(js/parseInt (.getAttribute (.-target %) "value"))))
+                                  :on-mouse-over #(reset! selected-index index)
                                   :on-click      #(do
                                                    (reset! typeahead-hidden? true)
                                                    (save! id result)
